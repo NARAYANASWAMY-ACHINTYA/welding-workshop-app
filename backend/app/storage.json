@@ -1,0 +1,13 @@
+{
+    "portfolio": [],
+    "catalogue": [
+      {"id": 1, "name": "Steel Gates", "desc": "Custom steel gates and entrances.", "price": ""}
+    ],
+    "contact": {
+      "phone": "+911234567890",
+      "whatsapp": "https://wa.me/911234567890",
+      "address": "Local Welding Workshop, Main Road, YourTown",
+      "maps": "https://maps.google.com/?q=YourTown"
+    },
+    "admin": {"username":"admin","password":"changeme"}
+  }
