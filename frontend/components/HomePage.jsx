@@ -44,11 +44,12 @@ export default function HomePage() {
 
   const openMaps = () => {
     if (!contact) return;
-    
+
+    const url = contact.maps_url;
     if (Platform.OS === 'web') {
-      window.open(contact.maps, '_blank');
+      window.open(url, '_blank');
     } else {
-      Linking.openURL(contact.maps);
+      Linking.openURL(url);
     }
   };
 

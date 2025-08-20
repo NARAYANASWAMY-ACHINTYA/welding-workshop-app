@@ -175,10 +175,10 @@ async def initialize_database(db: Session = Depends(get_db)):
         # Check if contact exists
         if not crud.get_contact(db):
             contact = models.Contact(
-                phone="+911234567890",
-                whatsapp="https://wa.me/911234567890",
-                address="Local Welding Workshop, Main Road, YourTown",
-                maps_url="https://maps.google.com/?q=YourTown"
+                phone="+91 94487 61091",
+                whatsapp="https://wa.me/9448761091",
+                address="Varadaganahalli, karnataka 563127",
+                maps_url="https://maps.app.goo.gl/VzLweYzC6zfpU3UF6"
             )
             db.add(contact)
         
@@ -225,3 +225,25 @@ async def test_admin_auth(
         return {"message": "Authentication successful", "status": "authorized"}
     else:
         raise HTTPException(status_code=401, detail='Authentication failed')
+
+@app.put('/admin/contact')
+async def admin_update_contact(
+    username: str = Form(...),
+    password: str = Form(...),
+    phone: str | None = Form(None),
+    whatsapp: str | None = Form(None),
+    address: str | None = Form(None),
+    maps_url: str | None = Form(None),
+    email: str | None = Form(None),
+    db: Session = Depends(get_db)
+):
+    if not crud.verify_admin(db, username, password):
+        raise HTTPException(status_code=401, detail='Unauthorized')
+    data = {k: v for k, v in {
+        "phone": phone, "whatsapp": whatsapp, "address": address, "maps_url": maps_url, "email": email
+    }.items() if v is not None}
+    contact = crud.update_contact(db, data)
+    return {"message": "Contact updated", "contact": {
+        "id": contact.id, "phone": contact.phone, "whatsapp": contact.whatsapp,
+        "address": contact.address, "maps_url": contact.maps_url, "email": contact.email
+    }}
